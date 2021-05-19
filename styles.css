@@ -18,11 +18,22 @@
 }
 .input {
   height: 100px;
+  text-align: right;
 }
-.input__text {
+.input__number {
   background-color: aqua;
+  font-size: 3em;
+  font-weight: bold;
   height: 70px;
   width: 100%;
+}
+.input ::-webkit-outer-spin-button,
+.input ::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input [type=number] {
+  -moz-appearance: textfield;
 }
 
 .controls__container {

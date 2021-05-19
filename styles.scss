@@ -19,11 +19,24 @@
 
 .input {
   height: 100px;
+  text-align: right;
 
-  &__text {
+  &__number {
     background-color: aqua;
+    font-size: 3em;
+    font-weight: bold;
     height: 70px;
     width: 100%;
+  }
+
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  }
+
+  [type=number] {
+    -moz-appearance: textfield;
   }
 }
 
