@@ -49,5 +49,9 @@
 }
 .controls__button--equals {
   grid-column: 3/5;
-  width: 150px;
+  width: 148px;
+}
+.controls__button--AC {
+  grid-column: 1/3;
+  width: 148px;
 }

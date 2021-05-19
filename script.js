@@ -5,48 +5,87 @@ const calcDisplay = document.querySelector(".input__display");
 let totalInput1 = "";
 let totalInput2 = "";
 let operator = "";
-let fullCalcString = "";
+let answer = "";
 
-let isFirstInput = false;
-let isSecondInput = false;
+let isInput1 = false;
+let isInput2 = false;
+let isButtonsDisabled = false;
+let pressedKey = "";
+let inputValue = "";
 
-const handleInputValue = (event) => {
-  let buttonValue = event.target.innerHTML;
-  const regex = /\d/g;
+const getInputValue = (event) => {
+  console.log(event);
+  if (event.type === "click")  {
+     inputValue = event.target.innerHTML;
+     console.log(inputValue);
+  } else if (event.type === "keydown") {
+    let key = event.key;
+    if (/^[\d\.]$/.test(key)) {
+      inputValue = key;
+    } else {
+      return;
+    }
+  }
+  handleInputValue(inputValue);
+}
+
+const handleInputValue = (buttonValue) => {
+  // let buttonValue = event.target.innerHTML;
+  const regex = /\d/;
   // if input is a number or decimal place:
   if (regex.test(buttonValue) || buttonValue === ".") {
-    isFirstInput ? totalInput2 += buttonValue : totalInput1 += buttonValue;
-    numberInput.innerHTML = isFirstInput ? totalInput2 : totalInput1;
-  console.log(`isFirstInput is ${isFirstInput}, isSecondInput is ${isSecondInput}, totalInput1 is ${totalInput1}, totalInput2 is ${totalInput2}`);
-
+    isInput1 ? totalInput2 += buttonValue : totalInput1 += buttonValue;
+    numberInput.innerHTML = isInput1 ? totalInput2 : totalInput1;
+    
   // if input is an operator:
   } else if (!regex.test(buttonValue) && buttonValue !== "=" && buttonValue !== "AC") {
     if (!totalInput1) return;
+    if (totalInput1 && totalInput2) return;
     operator = buttonValue;
     calcDisplay.innerHTML = `${totalInput1} ${operator} ${totalInput2}`;
-    if (isFirstInput) {
-      isFirstInput = false;
-      isSecondInput = true;
-      totalInput2 = "";
-    } else {
-      isFirstInput = true;
-      isSecondInput = false;
-      // totalInput1 = "";
+    totalInput1 ? isInput1 = true : isInput1 = false;
+    totalInput2 ? isInput2 = true : isInput2 = false;
+    if (isButtonsDisabled) {
+      isButtonsDisabled = false;
+      buttons.forEach((button) => {
+        button.disabled = false;
+      })
     }
+  
+    // if input is "=":  
   } else if (buttonValue === "=") {
-      let answer = runCalc(totalInput1, totalInput2, operator); 
+      if (!totalInput1 || !totalInput2) return;
+      answer = runCalc(Number(totalInput1), Number(totalInput2), operator); 
       calcDisplay.innerHTML = `${totalInput1} ${operator} ${totalInput2} = ${answer}`;
       numberInput.innerHTML = answer;
-      totalInput1 = "";
+      totalInput1 = answer;
+      totalInput2 = "";
+      isInput1 = true;
+      isInput2 = false;
+      operator = "";
+      buttons.forEach((button) => {
+        if (regex.test(button.innerHTML)) {
+          button.disabled = true;
+        }
+        if (button.innerHTML === ".") {
+          button.disabled = true;
+        }
+        isButtonsDisabled = true;
+      });
+  
+  // if input is "AC":
   } else if (buttonValue === "AC") {
     totalInput1 = "";
     totalInput2 = "";
-    isFirstInput = false;
-    isSecondInput = false;
+    isInput1 = false;
+    isInput2 = false;
     calcDisplay.innerHTML = "";
     numberInput.innerHTML = "";
     buttonValue = "";
     answer = "";
+    buttons.forEach((button) => {
+      button.disabled = false;
+    })
   }
 }
 
@@ -71,38 +110,11 @@ const runCalc = (num1, num2, operator) => {
 }
 
 buttons.forEach((button) => {
-  button.addEventListener("click", handleInputValue);
+  button.addEventListener("click", getInputValue);
 });
 
-// function to treat text/keyboard input as a click of relevant button:
-// function handleInputValue() {
-//   let enteredNumber = numberInput.value;
-//   console.log(typeof enteredNumber);
-//   for (let i=0; i<buttons.length; i++) {
-//     if (enteredNumber == buttons[i].innerHTML) {
-//       inputArray.push(buttons[i]);
-//     }
-//   }
-// }
+document.addEventListener("keydown", getInputValue);
 
-// numberInput.addEventListener("keydown", handleInputValue);
-
-
-
-
-// function handleInputValue(event) {
-//   const buttonValue = event.target.innerHTML;
-//   let enteredNumber = numberInput.value;
-//   const regex = /\d/g;
-//   let totalNumber = '';
-//   if (regex.test(buttonValue)) {
-//     enteredNumber += buttonValue;
-//   } else if (!regex.test(buttonValue)) {
-//     totalNumber = enteredNumber;
-//     enteredNumber = 0;
-//   }
-//   console.log(totalNumber, enteredNumber);
-// }
 
 
 
