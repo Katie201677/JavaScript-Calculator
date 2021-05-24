@@ -13,6 +13,7 @@ let isButtonsDisabled = false;
 let pressedKey = "";
 let inputValue = "";
 
+
 const getInputValue = (event) => {
   console.log(event);
   if (event.type === "click")  {
@@ -30,12 +31,30 @@ const getInputValue = (event) => {
 }
 
 const handleInputValue = (buttonValue) => {
-  // let buttonValue = event.target.innerHTML;
   const regex = /\d/;
   // if input is a number or decimal place:
   if (regex.test(buttonValue) || buttonValue === ".") {
-    isInput1 ? totalInput2 += buttonValue : totalInput1 += buttonValue;
+    if (isInput1) {
+      if (totalInput2.length < 8) {
+        totalInput2 += buttonValue;
+        console.log(totalInput2);
+      } else return;
+    } else if (!isInput1) {
+      if (totalInput1.length < 8) {
+        totalInput1 += buttonValue;
+      } else return;
+    }
+    // isInput1 ? totalInput2 += buttonValue : totalInput1 += buttonValue;
+    // deal with leading zeros:
+    // if (totalInput1[0] === 0 && totalInput1[1] !== ".") {
+    //   console.log("leading zero");
+    //   totalInput1 = totalInput1.substring(1);
+    // }
+    // if (totalInput2[0] === 0 && totalInput2[1] !== ".") {
+    //   totalInput2 = totalInput2.substring(1);
+    // }
     numberInput.innerHTML = isInput1 ? totalInput2 : totalInput1;
+
     
   // if input is an operator:
   } else if (!regex.test(buttonValue) && buttonValue !== "=" && buttonValue !== "AC") {
@@ -92,19 +111,19 @@ const handleInputValue = (buttonValue) => {
 const runCalc = (num1, num2, operator) => {
   switch(operator) {
     case "%":
-      return num1 % num2;
+      return (num1 % num2).toFixed(2);
       break;
     case "÷":
-      return num1 / num2;
+      return (num1 / num2).toFixed(2);
       break;
     case "x":
-      return num1 * num2;
+      return (num1 * num2).toFixed(2);
       break;
     case "-":
-      return num1 - num2;
+      return (num1 - num2).toFixed(2);
       break;
     case "+":
-      return num1 + num2;
+      return (num1 + num2).toFixed(2);
       break;
   }
 }
