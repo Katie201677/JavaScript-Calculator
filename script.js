@@ -1,6 +1,8 @@
 const buttons = document.querySelectorAll(".controls__button");
 const numberInput = document.querySelector(".input__number");
 const calcDisplay = document.querySelector(".input__display");
+const headerButton = document.querySelector(".header__button");
+const aboutText = document.querySelectorAll(".header__about");
 
 let totalInput1 = "";
 let totalInput2 = "";
@@ -116,6 +118,7 @@ const handleInputValue = (buttonValue) => {
 }
 
 const runCalc = (num1, num2, operator) => {
+  let sum;
   switch(operator) {
     case "%":
       return (num1 % num2).toFixed(2);
@@ -144,7 +147,20 @@ buttons.forEach((button) => {
 document.addEventListener("keydown", getInputValue);
 
 
-
+headerButton.addEventListener("click", () => {
+  if (!aboutText[0].classList.contains("visible")) {
+    aboutText.forEach((para) => {
+      para.classList.add("visible");
+    });
+    headerButton.innerHTML = "<h2 class='header__h2'>Hide</h2><i class='fas fa-arrow-circle-up header__icon'></i>";
+  } else {
+    aboutText.forEach((para) => {
+      para.classList.remove("visible");
+    });
+    headerButton.innerHTML = "<h2 class='header__h2'>More</h2><i class='fas fa-arrow-circle-down header__icon'></i>";
+  };
+  
+})
 
 
 

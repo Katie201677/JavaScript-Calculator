@@ -4,6 +4,49 @@
   padding: 0;
 }
 
+body {
+  background-color: #FE769D;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  font-family: "Noto Sans HK", sans-serif;
+}
+
+.header {
+  margin-bottom: 10px;
+  text-align: center;
+}
+.header__h1 {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.header__button {
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
+.header__h2 {
+  font-size: 1em;
+  padding-right: 5px;
+}
+.header__about {
+  display: none;
+  font-size: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.visible {
+  display: block;
+}
+
 .display {
   border: 2px solid black;
   border-radius: 3px;
@@ -11,9 +54,13 @@
   width: 300px;
 }
 
-@media (min-width: 600px) {
-  .display {
-    margin: 20px auto 10px 20px;
+@media (min-width: 500px) {
+  .header__button {
+    display: none;
+  }
+
+  .header__about {
+    display: block;
   }
 }
 .input {
@@ -21,11 +68,15 @@
   text-align: right;
 }
 .input__number {
-  background-color: aqua;
+  background-color: #C1BEC5;
   font-size: 3em;
   font-weight: bold;
   height: 70px;
   width: 100%;
+}
+.input__display {
+  background-color: #A29EA9;
+  height: 30px;
 }
 .input ::-webkit-outer-spin-button,
 .input ::-webkit-inner-spin-button {

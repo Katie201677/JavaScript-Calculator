@@ -6,47 +6,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JavaScript Calculator</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK&display=swap" rel="stylesheet">
   <script src="script.js" defer></script>
+  <script src="https://kit.fontawesome.com/89905c4029.js" crossorigin="anonymous"></script>
 </head>
 <body>
   
-  <header class="header">
-    <h1 class="header__h1">JavaScript Calculator</h1>
-    <h2 class="header__h2">Simple calculator built using HTML, SCSS and JavaScript</h2>
-  </header>
+  <div class="flexcontainer">
+    <header class="header">
+      <h1 class="header__h1">JavaScript Calculator</h1>
+      <div class="header__button">
+        <h2 class="header__h2">More</h2>
+        <i class="fas fa-arrow-circle-down header__icon"></i>
+      </div>
+      <p class="header__about">Simple calculator built using HTML, SCSS and JavaScript.</p> 
+      <p class="header__about">Use the buttons or keyboard inputs.</p>
+    </header>
 
-  <main>
-    <section class="display">
-      <section class="input">
-        <p class="input__number"></p>
-        <p class="input__display"></p>
-      </section>
+    <main>
       
-      <section class="controls">
-        <div class="controls__container">
-          <button class="controls__button controls__button--AC">AC</button>
-          <button class="controls__button">%</button>
-          <button class="controls__button">÷</button>
-          <button class="controls__button">7</button>
-          <button class="controls__button">8</button>
-          <button class="controls__button">9</button>
-          <button class="controls__button">x</button>
-          <button class="controls__button">4</button>
-          <button class="controls__button">5</button>
-          <button class="controls__button">6</button>
-          <button class="controls__button">-</button>
-          <button class="controls__button">1</button>
-          <button class="controls__button">2</button>
-          <button class="controls__button">3</button>
-          <button class="controls__button">+</button>
-          <button class="controls__button">0</button>
-          <button class="controls__button">.</button>
-          <button class="controls__button controls__button--equals">=</button>
-        </div>
-      </section>
+      <section class="display">
+        <section class="input">
+          <p class="input__number"></p>
+          <p class="input__display"></p>
+        </section>
+        
+        <section class="controls">
+          <div class="controls__container">
+            <button class="controls__button controls__button--AC">AC</button>
+            <button class="controls__button">%</button>
+            <button class="controls__button">÷</button>
+            <button class="controls__button">7</button>
+            <button class="controls__button">8</button>
+            <button class="controls__button">9</button>
+            <button class="controls__button">x</button>
+            <button class="controls__button">4</button>
+            <button class="controls__button">5</button>
+            <button class="controls__button">6</button>
+            <button class="controls__button">-</button>
+            <button class="controls__button">1</button>
+            <button class="controls__button">2</button>
+            <button class="controls__button">3</button>
+            <button class="controls__button">+</button>
+            <button class="controls__button">0</button>
+            <button class="controls__button">.</button>
+            <button class="controls__button controls__button--equals">=</button>
+          </div>
+        </section>
 
-    </section>
-  </main>
+      </section>
+    </main>
+  </div>
 
 </body>
 </html>

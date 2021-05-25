@@ -1,7 +1,60 @@
+$font-main: 'Noto Sans HK', sans-serif;
+$color-yellow: #FFDF34;
+$color-pink: #FE769D;
+$color-grey: #C1BEC5;
+$color-dark-grey: #A29EA9;
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  background-color: $color-pink;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  font-family: $font-main;
+}
+
+.header {
+  margin-bottom: 10px;
+  text-align: center;
+
+  &__h1 {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  &__button {
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+  }
+
+  &__h2 {
+    font-size: 1em;
+    padding-right: 5px;
+  }
+
+  &__about {
+    display: none;
+    font-size: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+}
+
+.visible {
+  display: block;
 }
 
 .display {
@@ -11,9 +64,13 @@
   width: 300px;
 }
 
-@media (min-width: 600px) {
-  .display {
-    margin: 20px auto 10px 20px;
+@media (min-width: 500px) {
+  .header__button {
+    display: none;
+  }
+  
+  .header__about {
+    display: block;
   }
 }
 
@@ -22,13 +79,19 @@
   text-align: right;
 
   &__number {
-    background-color: aqua;
+    background-color: $color-grey;
     font-size: 3em;
     font-weight: bold;
     height: 70px;
     width: 100%;
   }
 
+  &__display {
+    background-color: $color-dark-grey;
+    height: 30px;
+  }
+
+  //remove number input dropdown:
   ::-webkit-outer-spin-button,
   ::-webkit-inner-spin-button {
   -webkit-appearance: none;
