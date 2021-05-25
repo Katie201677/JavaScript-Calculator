@@ -62,6 +62,7 @@ const checkLeadingZeros = () => {
   }
 }
 
+//function to set operator value:
 const setOperatorValue = (buttonValue) => {
   if (!totalInput1) return;
   if (totalInput1 && totalInput2) return;
@@ -76,60 +77,24 @@ const setOperatorValue = (buttonValue) => {
   }
 }
 
-const handleInputValue = (buttonValue) => {
-  const regex = /\d/;
-  // if input is a number or decimal place:
-  if (regex.test(buttonValue) || buttonValue === ".") {
-    addTotalInput(buttonValue);
-  //prevent leading zeros in front of the input number:  
-    checkLeadingZeros();
-  //update display with relevant input:  
-  numberInput.innerHTML = isInput1 ? totalInput2 : totalInput1;
-    
-  // if input is an operator:
-  } if (!regex.test(buttonValue) && buttonValue !== "=" && buttonValue !== "AC" && buttonValue !== "Enter") {
-    setOperatorValue(buttonValue);
-    calcDisplay.innerHTML = `${totalInput1} ${operator} ${totalInput2}`;
-  
-    // if input is "=":  
-  } else if (buttonValue === "=" || buttonValue === "Enter") {
-      if (!totalInput1 || !totalInput2) return;
-      answer = runCalc(Number(totalInput1), Number(totalInput2), operator); 
-      calcDisplay.innerHTML = `${totalInput1} ${operator} ${totalInput2} = ${answer}`;
-      numberInput.innerHTML = answer;
-      totalInput1 = answer;
-      totalInput2 = "";
-      isInput1 = true;
-      isInput2 = false;
-      operator = "";
-      buttons.forEach((button) => {
-        if (regex.test(button.innerHTML)) {
-          button.disabled = true;
-        }
-        if (button.innerHTML === ".") {
-          button.disabled = true;
-        }
-        isButtonsDisabled = true;
-      });
-  
-  // if input is "AC":
-  } else if (buttonValue === "AC") {
-    totalInput1 = "";
-    totalInput2 = "";
-    isInput1 = false;
-    isInput2 = false;
-    operator = "";
-    calcDisplay.innerHTML = "";
-    numberInput.innerHTML = "";
-    buttonValue = "";
-    inputValue = "";
-    answer = "";
-    buttons.forEach((button) => {
-      button.disabled = false;
-    });
-  }
+//function to reset:
+const reset = () => {
+  totalInput1 = "";
+  totalInput2 = "";
+  isInput1 = false;
+  isInput2 = false;
+  operator = "";
+  calcDisplay.innerHTML = "";
+  numberInput.innerHTML = "";
+  buttonValue = "";
+  inputValue = "";
+  answer = "";
+  buttons.forEach((button) => {
+    button.disabled = false;
+  });
 }
 
+//function to perform calculation:
 const runCalc = (num1, num2, operator) => {
   let sum;
   switch(operator) {
@@ -153,13 +118,58 @@ const runCalc = (num1, num2, operator) => {
   }
 }
 
+const handleInputValue = (buttonValue) => {
+  const regex = /\d/;
+  // if input is a number or decimal place:
+  if (regex.test(buttonValue) || buttonValue === ".") {
+    addTotalInput(buttonValue);
+  //prevent leading zeros in front of the input number:  
+    checkLeadingZeros();
+  //update display with relevant input:  
+  numberInput.innerHTML = isInput1 ? totalInput2 : totalInput1;
+    
+  // if input is an operator:
+  } if (!regex.test(buttonValue) && buttonValue !== "=" && buttonValue !== "AC" && buttonValue !== "Enter") {
+    setOperatorValue(buttonValue);
+    calcDisplay.innerHTML = `${totalInput1} ${operator} ${totalInput2}`;
+  
+  // if input is "=":  
+  } if (buttonValue === "=" || buttonValue === "Enter") {
+      if (!totalInput1 || !totalInput2) return;
+      answer = runCalc(Number(totalInput1), Number(totalInput2), operator); 
+      calcDisplay.innerHTML = `${totalInput1} ${operator} ${totalInput2} = ${answer}`;
+      numberInput.innerHTML = answer;
+      totalInput1 = answer;
+      totalInput2 = "";
+      isInput1 = true;
+      isInput2 = false;
+      operator = "";
+      //prevent further inputs but allow further calculation based on existing answer:
+      buttons.forEach((button) => {
+        if (regex.test(button.innerHTML)) {
+          button.disabled = true;
+        }
+        if (button.innerHTML === ".") {
+          button.disabled = true;
+        }
+        isButtonsDisabled = true;
+      });
+  
+  // if input is "AC":
+  } if (buttonValue === "AC") {
+      reset();
+    }
+}
+
+
+
 buttons.forEach((button) => {
   button.addEventListener("click", getInputValue);
 });
 
 document.addEventListener("keydown", getInputValue);
 
-
+//function to show/hide further info when in mobile view:
 headerButton.addEventListener("click", () => {
   if (!aboutText[0].classList.contains("visible")) {
     aboutText.forEach((para) => {
@@ -171,8 +181,7 @@ headerButton.addEventListener("click", () => {
       para.classList.remove("visible");
     });
     headerButton.innerHTML = "<h2 class='header__h2'>More</h2><i class='fas fa-arrow-circle-down header__icon'></i>";
-  };
-  
+  }; 
 })
 
 
