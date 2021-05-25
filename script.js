@@ -1,30 +1,28 @@
+const aboutText = document.querySelectorAll(".header__about");
 const buttons = document.querySelectorAll(".controls__button");
-const numberInput = document.querySelector(".input__number");
 const calcDisplay = document.querySelector(".input__display");
 const headerButton = document.querySelector(".header__button");
-const aboutText = document.querySelectorAll(".header__about");
+const numberInput = document.querySelector(".input__number");
 
-let totalInput1 = "";
-let totalInput2 = "";
-let operator = "";
 let answer = "";
-
+let inputValue = "";
+let isButtonsDisabled = false;
 let isInput1 = false;
 let isInput2 = false;
-let isButtonsDisabled = false;
+let operator = "";
 let pressedKey = "";
-let inputValue = "";
+let totalInput1 = "";
+let totalInput2 = "";
 
 //function to get input value:
 const getInputValue = (event) => {
-  console.log(event);
   //button key pad:
   if (event.type === "click")  {
      inputValue = event.target.innerHTML;
-    //keyboard input:
+     event.target.blur();
+  //keyboard input:
   } else if (event.type === "keydown") {
     let key = event.key;
-    // if (/^[\d\.+=\-x%\/\*]$/.test(key)) {
       if (/^[\d\.+\-x%]$/.test(key)) {
       inputValue = key;
     } else if (key === "Enter") {
@@ -40,43 +38,58 @@ const getInputValue = (event) => {
   handleInputValue(inputValue);
 }
 
-const handleInputValue = (buttonValue) => {
-  const regex = /\d/;
-  // if input is a number or decimal place:
-  if (regex.test(buttonValue) || buttonValue === ".") {
-    //set max input length to 8:
-    if (isInput1) {
-      if (totalInput2.length < 8) {
-        totalInput2 += buttonValue;
-      } else return;
-    } else if (!isInput1) {
-      if (totalInput1.length < 8) {
-        totalInput1 += buttonValue;
-      } else return;
-    }
-  //prevent leading zeros in front of the input number:  
+//function to add button value to total input and set max input length to 8:
+const addTotalInput = (buttonValue) => {
+  if (isInput1) {
+    if (totalInput2.length < 8) {
+      totalInput2 += buttonValue;
+    } return;
+  }  
+  if (!isInput1) {
+    if (totalInput1.length < 8) {
+      totalInput1 += buttonValue;
+    } return;
+  }
+}
+
+//function to prevent leading zeros in front of the input number:
+const checkLeadingZeros = () => {
   if (totalInput1.length >=2 && totalInput1[0] === "0" && totalInput1[1]  !== ".") {
     totalInput1 = totalInput1.substring(1);
   } 
   if (totalInput2.length >=2 && totalInput2[0] === "0" && totalInput2[1]  !== ".") {
     totalInput2 = totalInput2.substring(1);
   }
+}
+
+const setOperatorValue = (buttonValue) => {
+  if (!totalInput1) return;
+  if (totalInput1 && totalInput2) return;
+  operator = buttonValue;
+  totalInput1 ? isInput1 = true : isInput1 = false;
+  totalInput2 ? isInput2 = true : isInput2 = false;
+  if (isButtonsDisabled) {
+    isButtonsDisabled = false;
+    buttons.forEach((button) => {
+      button.disabled = false;
+    })
+  }
+}
+
+const handleInputValue = (buttonValue) => {
+  const regex = /\d/;
+  // if input is a number or decimal place:
+  if (regex.test(buttonValue) || buttonValue === ".") {
+    addTotalInput(buttonValue);
+  //prevent leading zeros in front of the input number:  
+    checkLeadingZeros();
+  //update display with relevant input:  
   numberInput.innerHTML = isInput1 ? totalInput2 : totalInput1;
     
   // if input is an operator:
-  } else if (!regex.test(buttonValue) && buttonValue !== "=" && buttonValue !== "AC" && buttonValue !== "Enter") {
-    if (!totalInput1) return;
-    if (totalInput1 && totalInput2) return;
-    operator = buttonValue;
+  } if (!regex.test(buttonValue) && buttonValue !== "=" && buttonValue !== "AC" && buttonValue !== "Enter") {
+    setOperatorValue(buttonValue);
     calcDisplay.innerHTML = `${totalInput1} ${operator} ${totalInput2}`;
-    totalInput1 ? isInput1 = true : isInput1 = false;
-    totalInput2 ? isInput2 = true : isInput2 = false;
-    if (isButtonsDisabled) {
-      isButtonsDisabled = false;
-      buttons.forEach((button) => {
-        button.disabled = false;
-      })
-    }
   
     // if input is "=":  
   } else if (buttonValue === "=" || buttonValue === "Enter") {
@@ -121,21 +134,21 @@ const runCalc = (num1, num2, operator) => {
   let sum;
   switch(operator) {
     case "%":
-      return (num1 % num2).toFixed(2);
+      return Number((num1 % num2).toFixed(2));
       break;
     case "÷":
     case "/":
-      return (num1 / num2).toFixed(2);
+      return Number((num1 / num2).toFixed(2));
       break;
     case "x":
     case "*":
-      return (num1 * num2).toFixed(2);
+      return Number((num1 * num2).toFixed(2));
       break;
     case "-":
-      return (num1 - num2).toFixed(2);
+      return Number((num1 - num2).toFixed(2));
       break;
     case "+":
-      return (num1 + num2).toFixed(2);
+      return Number((num1 + num2).toFixed(2));
       break;
   }
 }
