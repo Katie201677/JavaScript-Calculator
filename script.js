@@ -67,8 +67,8 @@ const setOperatorValue = (buttonValue) => {
   if (!totalInput1) return;
   if (totalInput1 && totalInput2) return;
   operator = buttonValue;
-  totalInput1 ? isInput1 = true : isInput1 = false;
-  totalInput2 ? isInput2 = true : isInput2 = false;
+  isInput1 = totalInput1 ? true : false;
+  isInput2 = totalInput2 ? true : false;
   if (isButtonsDisabled) {
     isButtonsDisabled = false;
     buttons.forEach((button) => {
@@ -77,7 +77,7 @@ const setOperatorValue = (buttonValue) => {
   }
 }
 
-//function to reset:
+//function to reset: // change just to common things for = as well:
 const reset = () => {
   totalInput1 = "";
   totalInput2 = "";
@@ -115,6 +115,7 @@ const runCalc = (num1, num2, operator) => {
     case "+":
       return Number((num1 + num2).toFixed(2));
       break;
+      // default:
   }
 }
 
