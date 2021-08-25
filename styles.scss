@@ -12,7 +12,7 @@ $color-dark-grey: #A29EA9;
 
 body {
   background-color: $color-pink;
-  background-image: url("wave (2).svg");
+  // background-image: url("wave (2).svg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
@@ -125,9 +125,4 @@ body {
     grid-column: 1 / 3;
     width: 148px;
   }
-}
-
-.background-color {
-  height: 100px;
-  background-color: $color-green;
 }
